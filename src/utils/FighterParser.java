@@ -11,14 +11,14 @@ public class FighterParser {
     {   
         String name = row[0];
         String nickname = row[1];
-        int wins = Integer.parseInt(row[2]); 
-        int losses = Integer.parseInt(row[3]);
-        int draws = Integer.parseInt(row[4]);
-        double heightCm = Double.parseDouble(row[5]);
-        double weightKg = Double.parseDouble(row[6]);
-        double reachCm = Double.parseDouble(row[7]);
+        int wins = (int) (numberCleaner(row[2]));
+        int losses = (int) (numberCleaner(row[3]));
+        int draws = (int) (numberCleaner(row[4]));
+        double heightCm = numberCleaner(row[5]);
+        double weightKg = numberCleaner(row[6]);
+        double reachCm = numberCleaner(row[7]);
         String stance = row[8];
-        LocalDate birthDate = LocalDate.parse(row[9]);
+        LocalDate birthDate = dateCleaner(row[9]);
         StrikingStats strikingStats = parseStrikingStats(row);
         GrapplingStats grapplingStats = parseGrapplingStats(row);
         
@@ -27,21 +27,41 @@ public class FighterParser {
 
     public StrikingStats parseStrikingStats(String[] row)
     {
-        double strikesLandedPerMin = Double.parseDouble(row[10]);
-        double strikingAccuracy = Double.parseDouble(row[11]);
-        double strikesAbsorbedPerMin = Double.parseDouble(row[12]);
-        double strikeDefense = Double.parseDouble(row[13]);
+        double strikesLandedPerMin = numberCleaner(row[10]);
+        double strikingAccuracy = numberCleaner(row[11]);
+        double strikesAbsorbedPerMin = numberCleaner(row[12]);
+        double strikeDefense = numberCleaner(row[13]);
         
         return new StrikingStats(strikesLandedPerMin,strikingAccuracy,strikesAbsorbedPerMin, strikeDefense);
     }
 
     public GrapplingStats parseGrapplingStats(String[] row)
     {
-        double takedownsPer15Min = Double.parseDouble(row[14]);
-        double takedownAccuracy = Double.parseDouble(row[15]);
-        double takedownDefense = Double.parseDouble(row[16]);
-        double submissionsPer15Min = Double.parseDouble(row[17]);
+        double takedownsPer15Min = numberCleaner(row[14]);
+        double takedownAccuracy = numberCleaner(row[15]);
+        double takedownDefense = numberCleaner(row[16]);
+        double submissionsPer15Min = numberCleaner(row[17]);
         
         return new GrapplingStats(takedownsPer15Min, takedownAccuracy, takedownDefense, submissionsPer15Min);
-    }  
+    }
+    
+    private double numberCleaner(String value)
+    {
+        //value = stringCleaner(value);
+
+        if (value.equals("") || value.equals(" "))
+            value = "0.0";
+        
+        return Double.parseDouble(value);
+    }
+
+    private LocalDate dateCleaner(String value)
+    {
+        //value = stringCleaner(value);
+
+        if (value.equals("") || value.equals(" "))
+            value = "0000-01-01";
+        
+        return LocalDate.parse(value);
+    }
 }
