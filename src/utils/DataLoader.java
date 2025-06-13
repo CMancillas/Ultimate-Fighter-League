@@ -59,7 +59,7 @@ public class DataLoader {
 
     public static void main(String[] args)
     {
-        DataLoader data = new DataLoader("/home/carlos-mancillas/Documents/proyectos_personales/Ultimate-Fighter-League/data/ufc-fighters-statistics.csv");
+        DataLoader data = new DataLoader("data/ufc-fighters-statistics.csv");
         LinkedList<Fighter> fighters = data.loadFighter();
         System.out.println(fighters.get(188));
     }
