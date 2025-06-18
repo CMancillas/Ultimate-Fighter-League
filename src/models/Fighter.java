@@ -180,7 +180,7 @@ public class Fighter {
         if ( nickname == null || nickname.isBlank() )
             return name;
         
-        return name + "AKA \"" + nickname + "\""; 
+        return name + " AKA \"" + nickname + "\""; 
     }
 
     @Override

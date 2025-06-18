@@ -1,11 +1,8 @@
 package utils;
 import models.Fighter;
-import models.GrapplingStats;
-import models.StrikingStats;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.nio.channels.Pipe.SourceChannel;
 import java.util.Scanner;
 import java.util.LinkedList;
 
@@ -55,12 +52,5 @@ public class DataLoader {
         }
 
         return ll;
-    }
-
-    public static void main(String[] args)
-    {
-        DataLoader data = new DataLoader("data/ufc-fighters-statistics.csv");
-        LinkedList<Fighter> fighters = data.loadFighter();
-        System.out.println(fighters.get(188));
     }
 }
