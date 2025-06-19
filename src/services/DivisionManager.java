@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Collection;
+import java.util.Set;
 import models.Fighter;
 import utils.DataLoader;
 
@@ -12,85 +12,132 @@ public class DivisionManager {
     private HashMap<String, HashMap<Integer, Fighter>> divisions;
     DataLoader data;
     List<Fighter> fighters;
+
     // Constructor
     public DivisionManager()
     {
         this.divisions = new HashMap<>();
         data = new DataLoader("data/ufc-fighters-statistics.csv");
         fighters = new ArrayList<>(data.loadFighter());
-        
+        initializeDivisons();
+    }
+
+    private void initializeDivisons()
+    {
+        divisions.put("Flyweight", getMenFlyweight());
+        divisions.put("Bantamweight",getMenBantamweight());
+        divisions.put("Featherweight", getMenFeatherweight());
+        divisions.put("Lightweight", getLightweight());
+        divisions.put("Welterweight", getWelterweight());
+        divisions.put("Middleweight", getMiddleweight());
+        divisions.put("Light Heavyweight", getLightHeavyweightweight());
+        divisions.put("Heavyweight", getHeavyweight());
+        divisions.put("Women's Strawweight", getStrawweight());
+        divisions.put("Women's Flyweight", getWomensFlyweight());
+        divisions.put("Women's Bantamweight", getWomensBantamweight());
+        divisions.put("Men's Pound For Pound", getMenPoundForPound());
+        divisions.put("Women's Pound For Pound", getWomenPoundForPound());
     }
 
     // Getter and Setter
-    public HashMap<String, HashMap<Integer, Fighter>> getDivision()
-    {
+    public HashMap<String, HashMap<Integer, Fighter>> getDivisions()
+    {  
         return divisions;
     }
 
-    public void setDivison(HashMap<String, HashMap<Integer, Fighter>> divisions)
+    public void setDivisons(HashMap<String, HashMap<Integer, Fighter>> divisions)
     {
         this.divisions = divisions;
     }
-
-    public void initializeDivisons()
+    
+    public String[] getDivisionsNames()
     {
+        return new String[] {"Flyweight",
+        "Bantamweight",
+        "Featherweight",
+        "Lightweight",
+        "Welterweight",
+        "Middleweight",
+        "Light Heavyweight",
+        "Heavyweight",
+        "Women's Strawweight",
+        "Women's Flyweight",
+        "Women's Bantamweight",
+        "Men's Pound For Pound",
+        "Women's Pound For Pound"};
+    } 
 
+    public void printAllDivisons() {
+    String[] divisionNames = getDivisionsNames();
+
+    for (int i = 0; i < divisionNames.length; i++) {
+        String title = divisionNames[i];
+        LinkedList<Fighter> division = getDivisionRankings(i + 1);
+
+        System.out.println("=".repeat(50));
+        if (i == divisionNames.length - 1 || i == divisionNames.length - 2)
+            System.out.printf("🥊 %-40s 🥊\n", title);
+        else
+            System.out.printf(" %-40s \n", title);
+        System.out.println("=".repeat(50));
+
+        for (int j = 0; j < division.size(); j++) {
+            Fighter f = division.get(j);
+            
+            if ( i != divisionNames.length - 1 && i != divisionNames.length - 2)
+            {   if (j == 0)
+                    System.out.printf("%2s. %-30s🏆\n","C", f.getFullName());
+                else
+                    System.out.printf("%2d. %-30s\n", j, f.getFullName());
+            }
+            else
+                System.out.printf("%2d. %-30s\n", j + 1, f.getFullName());
+
+        }
+
+        System.out.println(); 
     }
+}
 
-    public LinkedList<Fighter> getRankings(int ranking)
+    public LinkedList<Fighter> getDivisionRankings(int ranking)
     {
-        // 1 flyweight
         switch (ranking) {
             case 1:
-                HashMap<Integer,Fighter> menFlyweight = getMenFlyweight();
-                return new LinkedList<>(menFlyweight.values());
+                return new LinkedList<>(divisions.get("Flyweight").values());
             case 2:
-                HashMap<Integer,Fighter> menBantamweight = getMenBantamweight();
-                return new LinkedList<>(menBantamweight.values());
+                return new LinkedList<>(divisions.get("Bantamweight").values());
             case 3:
-                HashMap<Integer,Fighter> menFeatherweight = getMenFeatherweight();
-                return new LinkedList<>(menFeatherweight.values());
+                return new LinkedList<>(divisions.get("Featherweight").values());
             case 4:
-                HashMap<Integer,Fighter> lightweight = getLightweight();
-                return new LinkedList<>(lightweight.values());
+                return new LinkedList<>(divisions.get("Lightweight").values());
             case 5:
-                HashMap<Integer,Fighter> welterweight = getWelterweight();
-                return new LinkedList<>(welterweight.values());
+                return new LinkedList<>(divisions.get("Welterweight").values());
             case 6:
-                HashMap<Integer,Fighter> middleweight = getMiddleweight();
-                return new LinkedList<>(middleweight.values());
+                return new LinkedList<>(divisions.get("Middleweight").values());
             case 7:
-                HashMap<Integer,Fighter> lightHeavyweight = getLightHeavyweightweight();
-                return new LinkedList<>(lightHeavyweight.values());
+                return new LinkedList<>(divisions.get("Light Heavyweight").values());
             case 8:
-                HashMap<Integer,Fighter> heavyweight = getHeavyweightweight();
-                return new LinkedList<>(heavyweight.values());
+                return new LinkedList<>(divisions.get("Heavyweight").values());
             case 9:
-                HashMap<Integer,Fighter> strawweight = getStrawweight();
-                return new LinkedList<>(strawweight.values());
+                return new LinkedList<>(divisions.get("Women's Strawweight").values());
             case 10:
-                HashMap<Integer,Fighter> womensFlyweight = getWomensFlyweight();
-                return new LinkedList<>(womensFlyweight.values());
+                return new LinkedList<>(divisions.get("Women's Flyweight").values());
             case 11:
-                HashMap<Integer,Fighter> womensBantamweight = getWomensBantamweight();
-                return new LinkedList<>(womensBantamweight.values());
+                return new LinkedList<>(divisions.get("Women's Bantamweight").values());
             case 12:
-                HashMap<Integer,Fighter> menPoundForPound = getMenPoundForPound();
-                return new LinkedList<>(menPoundForPound.values());
+                return new LinkedList<>(divisions.get("Men's Pound For Pound").values());
             case 13:
-                HashMap<Integer,Fighter> womenPoundForPound = getWomenPoundForPound();
-                return new LinkedList<>(womenPoundForPound.values());
-
+                return new LinkedList<>(divisions.get("Women's Pound For Pound").values());
             default:
-                break;
+                System.out.println("There's no such existing ranking.");
+                return new LinkedList<>();
         }
-        
-        return null;
     }
 
     
     private HashMap<Integer, Fighter> getMenFlyweight()
     {
+
         HashMap<Integer, Fighter> menFlyweight = new HashMap<>();
 
         menFlyweight.put(1, fighters.get(797));
@@ -259,7 +306,7 @@ public class DivisionManager {
     }
 
 
-    private HashMap<Integer, Fighter> getHeavyweightweight()
+    private HashMap<Integer, Fighter> getHeavyweight()
     {
         HashMap<Integer, Fighter> heavyweight = new HashMap<>();
 
@@ -402,12 +449,6 @@ private HashMap<Integer, Fighter> getWomensFlyweight()
         return poundForPound;
     }
 
-    public void printDivision(List<Fighter> division)
-    {
-        for(int i = 0; i < division.size(); i++)
-        {
-            System.out.printf("%d.- %s\n", (i+1), division.get(i).getName());
-        }
-    }
+
 
 }

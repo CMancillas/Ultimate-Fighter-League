@@ -48,6 +48,36 @@ public class Division {
             System.out.println("Divison " + name + " already has 15 fighters.");
     }
 
+    public void printDivision()
+    {
+        
+        System.out.println("=".repeat(50));
+        
+        if ( getName().equals("Men's Pound For Pound") || getName().equals("Women's Pound For Pound") )
+            System.out.printf(" 🥊 %-40s🥊 \n", name + " Division");
+        else
+            System.out.printf(" %-40s \n", name + " Division");
+        
+            System.out.println("=".repeat(50));
+
+        for (int i = 0; i < fighters.size(); i++)
+         {
+            Fighter fighter = fighters.get(i);
+            if (getName().equals("Men's Pound For Pound") || getName().equals("Women's Pound For Pound")) 
+                System.out.printf("%2d. %-30s\n", i + 1, fighter.getFullName());
+            else
+            {
+                if (i == 0)
+                    System.out.printf("%2s. %-30s 🏆\n", "C", fighter.getFullName());
+                else 
+                    System.out.printf("%2d. %-30s\n", i, fighter.getFullName());
+            } 
+        }
+
+        System.out.println("=".repeat(50));
+        System.out.println();
+    }
+
 
     @Override
     public String toString()
