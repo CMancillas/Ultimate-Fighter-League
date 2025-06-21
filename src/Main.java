@@ -20,9 +20,9 @@ public class Main {
         while (loop)
         {
             ufl.menu();
-            while (option != 1 && option != 2 && option != 3 && option != 4 && option != 5 )
+            while (option != 1 && option != 2 && option != 3 && option != 4 && option != 5 && option != 6)
             {
-                System.out.print("Please select an option (1-5): ");
+                System.out.print("Please select an option (1-6): ");
                 option = scanner.nextInt();
                 scanner.nextLine();
             }
@@ -42,7 +42,13 @@ public class Main {
                 case 3:
                     ufl.simulateAMatch();
                     break;
+                case 4:
+                    ufl.runTournament();
+                    break;
                 case 5:
+                    ufl.printFighterDetails();
+                    break;
+                case 6:
                     loop = false;
                     System.out.println("Thank you!");
                     break;
@@ -51,7 +57,7 @@ public class Main {
                     break;
             }
             
-            if (option == 5)
+            if (option == 6)
                 break;
             
             option = 0;
@@ -60,6 +66,7 @@ public class Main {
             clearScreen();
         }
     }
+    
 
     public static void clearScreen()
     {

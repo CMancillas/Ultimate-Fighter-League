@@ -10,8 +10,20 @@ import models.Tournament;
 import models.Match;
 
 public class TournamentService {
-    private MatchService matchService = new MatchService();
+    private MatchService matchService;
+    private List<List<Match>> rounds;
 
+    public TournamentService()
+    {
+        matchService = new MatchService();
+        rounds = new LinkedList<>();
+    }
+    
+    public List<List<Match>> getRounds()
+    {
+        return rounds;
+    }
+    
     public Tournament createTournament(List<Fighter> fighters)
     {   
         // Validate size (4,8,16)
@@ -27,9 +39,9 @@ public class TournamentService {
 
         while ( answer != 1 && answer != 2 )
         {
-            System.out.println("Select an option: ");
-            System.out.println("1.-Shuffle fighters.");
-            System.out.println("2.- Keep figters in order.");
+            System.out.println("🔀 Do you want to shuffle the fighters? ");
+            System.out.println("1.-Yes");
+            System.out.println("2.- No");
             System.out.print("Your option: ");
             answer = scanner.nextInt();
         }   
@@ -46,6 +58,7 @@ public class TournamentService {
         // Simulate matches in rounds until one winner remains
         List<Fighter> fighters = tournament.getFighters();
         List<Fighter> winners = new LinkedList<Fighter>();
+        List<Match> rounds = new LinkedList<>();
         
         if ( fighters.size() == 1 )
         {
@@ -59,9 +72,12 @@ public class TournamentService {
             for ( int i = 0; i < fighters.size(); i += 2)
             {
                 Match match = matchService.simulateMatch( fighters.get(i), fighters.get(i + 1));
+                rounds.add(match);
                 winners.add(match.getWinner());
             }
         }
+
+        this.rounds.add(rounds);
 
         return runTournament( new Tournament(winners) );
     } 
@@ -72,6 +88,37 @@ public class TournamentService {
         {
             System.out.println("Fighter: " + fighters.get(i).getFullName());
         }
+    }
+
+    public void printTournament(Tournament tournament)
+    {
+        List<List<Match>> rounds = tournament.getRounds();
+        String f1 = "", f2 = "", winner = "";
+        System.out.println("========================================");
+        System.out.println("        🏆 Tournament Bracket");
+        System.out.println("========================================");
+
+        for ( int i = 0; i < rounds.size(); i++)
+        {
+            System.out.println();
+
+            if ( i == rounds.size() - 1)
+                System.out.printf("Final: \n" );
+            else
+                System.out.printf("Round %d: \n", i + 1 );
+            
+            for (int j = 0; j < rounds.get(i).size(); j++)
+            {
+                f1 = rounds.get(i).get(j).getFighterA().getName();
+                f2 = rounds.get(i).get(j).getFighterB().getName();
+                winner = rounds.get(i).get(j).getWinner().getFullName(); 
+                System.out.printf("🥊 %s vs %s → Winner: %s\n", f1, f2, winner);
+            }
+        }
+
+        System.out.println();
+        System.out.printf("🎉 Tournament Winner: %s\n", winner );
+        System.out.println();
     }
 
 }
