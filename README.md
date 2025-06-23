@@ -9,9 +9,9 @@ A terminal-based Java simulation for managing UFC divisions, exploring fighter s
 - 🏆 Create and simulate tournaments (4, 8, or 16 fighters).
 - 🎲 Random or ordered tournament seeding.
 - 📊 Terminal-based interactive menu with user-friendly navigation.
+### Project Structure 🧱
 
-### Project Structure 🧱 
-
+```text
 Ultimate-Fighter-League/
 ├── data/
 │   └── ufc-fighters-statistics.csv
@@ -29,6 +29,8 @@ Ultimate-Fighter-League/
 │   │   └── UFLMenuManager.java
 │   └── utils/
 │       └── DataLoader.java
+
+```
 
 ### Requirements 📦
 
