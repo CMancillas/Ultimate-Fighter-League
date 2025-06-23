@@ -1,3 +1,5 @@
+package services;
+
 import java.util.Scanner;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -5,6 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.time.LocalDate;
 
+import app.Main;
 import models.Division;
 import models.Fighter;
 import models.Match;
@@ -221,6 +224,7 @@ public class UFLMenuManager{
         System.out.println();
     }
 
+    
     public void printFighterDetails()
     {
         int option = 0;

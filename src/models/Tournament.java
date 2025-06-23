@@ -1,5 +1,5 @@
 package models;
-    import java.util.List;
+import java.util.List;
 
 public class Tournament {
     private List<Fighter> fighters;

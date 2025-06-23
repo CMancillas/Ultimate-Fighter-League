@@ -9,7 +9,7 @@ SOURCES := $(shell find $(SRC_DIR) -name "*.java")
 CLASSES := $(patsubst $(SRC_DIR)/%.java, $(BIN_DIR)/%.class, $(SOURCES))
 
 # Main class
-MAIN_CLASS=Main
+MAIN_CLASS=app/Main
 
 # Compile and run
 run: compile
